@@ -1,0 +1,25 @@
+{
+  "name": "youtubeconverter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "dev": "parcel public/index.html",
+    "build": "parcel build public/index.html"
+  },
+  "author": "Jheno Cerbito",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "discord-ytdl-core": "^5.0.4",
+    "discord.js": "^12.5.3",
+    "express": "^4.17.1",
+    "ffmpeg-static": "^4.4.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "pretty-bytes": "^5.6.0",
+    "progress": "^2.0.3",
+    "ytdl-core": "^4.8.2"
+  }
+}
