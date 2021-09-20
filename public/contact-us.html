@@ -5,8 +5,107 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact US</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    
+    <nav class="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <span style="font-weight:bold;color:white;">Y2BC</span><span style="font-size:19px;color:#fff;">ONVERTER</span>
+            </a>
+        </div>
+    </nav>
+    <header class="jumbotron jumbotron-fluid">
+        <div class="container text-center"> 
+    </div>
+    </header>   
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 col-sm-12">
+                    <section id="services" class="container">
+
+                        <form action="/sent" method="post">
+                            <div class="form-row">
+                              <div class="form-group col-md-12">
+                                <label for="inputEmail">Name</label>
+                                <input type="text" class="form-control" id="inputName" name="name" placeholder="Input your name...">
+                              </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                  <label for="inputEmail">Email</label>
+                                  <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Attach your email...">
+                                </div>
+                              </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Message</label>
+                                <textarea class="form-control" name="message" id="exampleFormControlTextarea1" rows="4"></textarea>
+                            </div>
+                            <button type="submit" id="sendMail" class="btn btn-primary col-md-12 mt-5 mb-5">Send</button>
+                          </form>
+                    </section>
+                </div>
+                <div class="col-md-7 col-sm-12">
+                    <img src="images/logo.png" class="img-fluid">
+                    <h1 class="display-4 text-justify mt-3" style="font-size:24px"><b>Y2BConverter</b> is a youtube converter platform 
+                    that allow to the customers to download videos or audios using the youtube links. This project is build by
+                    <b>Jheno S Cerbito</b></h1>
+                    <h1 class="display-4 text-justify mt-5" style="font-size:24px">Thank you for choosing Y2BConverter!</h1>
+                </div>
+            </div>
+        </div>
+        <!-- FOOTER SECTION-->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ <footer class="py-3 bg-light mt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center"><a href="/contact-us">Contact-us</a></div>
+            <div class="col text-center"><a href="/privacy-policy">Privacy Policy</a></div>
+            <div class="col text-center"><a href="/terms-of-service">Terms of Service</a></div>
+        </div>
+       <p class="text-center mt-3">Copyright &copy; 2021 Y2B Converter</p>
+    </div>
+</footer>
+<script>
+$(function() {
+    const queryString = window.location.search;
+    console.log(queryString)
+    const urlParams = new URLSearchParams(queryString);
+    console.log(urlParams)
+    let isSuccessSTR = urlParams.get('success')
+
+    if(isSuccessSTR!=null){
+        let isSuccess = isSuccessSTR=='true' ? true : false;
+        if(isSuccess==true){
+            swal({
+                title: "SENT!",
+                text: "Your response has been sent.",
+                icon: "success",
+            }).then(function() {
+                window.location.href = '/contact-us';
+            });
+        }else if(isSuccess==false){
+            swal({
+                title: "ERROR!",
+                text: "Internal Server Error!",
+                icon: "warning",
+            }).then(function() {
+                window.location.href = '/contact-us';
+            });
+        }
+ 
+       
+    }
+});
+document.querySelector('#sendMail').addEventListener('mouseup',()=>{
+    swal("Sending...!");
+});
+</script>
 </body>
 </html>

@@ -14,6 +14,7 @@ let detailsNode = {
                         videosOption: document.querySelector('.video-data .controls #videos-options'),
                         audioOption: document.querySelector('.video-data .controls #audio-options')
 }
+
 function convertHMS(value) {
     const sec = parseInt(value, 10); // convert value to number if it's string
     let hours   = Math.floor(sec / 3600); // get hours
@@ -73,20 +74,10 @@ function progress(){
         return true;
     }
 }
-
-// document.querySelector('#get-video-info-btn').addEventListener('click',()=>{
-$('#get-video-info-btn').on('click', function() {
-    let videoURL = document.querySelector('#videoURL').value.trim();
-    var $this = $(this);
-    if(videoURL.length==0){
-        alert("YOU MUST FILLED SOME URL");
-        // NEed mo ng loader para sa retrieving data... nood ka muna haha
-    }
-    else{
-        //    console.log($this);
-
-           $this.button('loading');
-            const response = async ()=>{
+const Callback = async (this_url)=> {
+    let videoURL = this_url.trim();
+    console.log(videoURL);
+    const response = async ()=>{
                 try{
                     const res = await fetch(host+'/videoInfo?videoURL='+ videoURL);
                     const resClone = res.clone();
@@ -126,12 +117,12 @@ $('#get-video-info-btn').on('click', function() {
                 }
             };
             ;
-            response().then((data)=>{
+            await response().then((data)=>{
                     console.log(data)
                     setTimeout(()=>{
                         progressLoader.setAttribute('style','display:none');
                     },2500);
-                    $this.button('reset')
+                    $('#get-video-info-btn').button('reset')
                     // console.log(qualityNodes);
                     data.video_and_audio.forEach((formats)=>{
                         let currentFileSize = typeof formats.contentLength != 'undefined' ? bytesToSize(formats.contentLength): '';
@@ -187,12 +178,33 @@ $('#get-video-info-btn').on('click', function() {
                         console.log("THERE IS SOMETHING WRONG " + error);
                         warningLoader.removeAttribute('hidden');
                         resolve();
-                        $this.button('reset')
+                        $('#get-video-info-btn').button('reset')
                     },1500);
-                });
+            });
                
 
              //   throw error;
-            })
+    })
+    
+}
+// document.querySelector('#get-video-info-btn').addEventListener('click',()=>{
+$('#videoURL').on('paste',async (e)=>{
+    let videoURL = e.originalEvent.clipboardData.getData('Text');
+    $('#get-video-info-btn').button('loading');
+    setTimeout(await Callback(videoURL),1000)
+});
+
+$('#get-video-info-btn').on('click',async  function(){
+    let videoURL = document.querySelector('#videoURL').value
+    if(videoURL.length==0){
+        swal({
+            title: "EMPTY URL!",
+            text: "Please paste valid Youtube URL!",
+            icon: "warning",
+          });
+    }
+    else{
+        $('#get-video-info-btn').button('loading');
+        await Callback(videoURL);
     }
 });

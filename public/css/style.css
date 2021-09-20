@@ -9,6 +9,10 @@
     padding: 0 !important;
     margin: 0 !important;;
 }
+.navbar .navbar-brand{
+    font-size: 30px;
+    margin-left: 10px;
+}
 .navbar .container-fluid{
     padding: 5px !important;
     margin:0 !important;;
@@ -79,9 +83,7 @@ transform: scale(1,1) translate(0px, 0px);
     color: grey;
 }
 @media (max-width: 350px){ 
-    .navbar{
-        background-color: black;
-    }
+ 
     .navbar .container-fluid{
         padding: 0 !important;
         margin:0 !important;;
@@ -120,7 +122,7 @@ transform: scale(1,1) translate(0px, 0px);
 }
 @media (min-width: 351px) and  (max-width: 550px){ 
     .navbar{
-        background-color: orange;
+     
         padding: 0 !important;
         margin:0 !important;;
     }
@@ -157,7 +159,7 @@ transform: scale(1,1) translate(0px, 0px);
 }
 @media  (min-width: 551px) and (max-width: 850px){ 
     .navbar{
-        background-color: red;
+   
         padding-left: 5px !important;
         margin: 0 !important;;
     }
@@ -196,7 +198,7 @@ transform: scale(1,1) translate(0px, 0px);
 }
 @media (min-width: 851px) and (max-width: 1000px){
     .navbar{
-        background-color: blue;
+       
         padding: 5px !important;
         margin: 0 !important;;
     }
@@ -232,9 +234,12 @@ transform: scale(1,1) translate(0px, 0px);
 }
 @media (min-width: 1001px) and (max-width: 1200px){
     .navbar{
-        background-color: green;
+       
         padding: 5px !important;
         margin: 0 !important;;
+    }
+    .navbar .navbar-brand{
+        font-size: 30px;
     }
     .navbar .container-fluid{
         padding: 0 !important;

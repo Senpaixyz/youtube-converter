@@ -16,10 +16,8 @@ const download_buttons = document.querySelectorAll('.download-buttons');
 window.addEventListener('resize',()=>{
    checkResolution();
 });
-
 function checkResolution() {   
     if($(window).width() < 660){
-        navbar_brand.src = 'images/mobile-logo.png';
         inputConvertDOM.innerHTML = `
                 <input type="text" class="form-control col" id="videoURL" placeholder="Enter Youtube URL here..." aria-label="Enter Youtube URL here..." aria-describedby="basic-addon2">
                 <br>
@@ -28,7 +26,6 @@ function checkResolution() {
         `;
     }
     else{
-        navbar_brand.src = 'images/logo.png';
         inputConvertDOM.innerHTML = `
                                             <div class="input-group mb-3">
                                             <input type="text" class="form-control" id="videoURL" placeholder="Enter Youtube URL here..." aria-label="Enter Youtube URL here..." aria-describedby="basic-addon2">

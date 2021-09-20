@@ -1,18 +1,18 @@
 const express = require('express');
 const ytdl = require('ytdl-core');
 const {YTDL_MOD} = require('./api/YTDL_MOD');
-
 const ytdl_discord = require("discord-ytdl-core");
 const Discord = require("discord.js");
+const nodemailer = require('./api/nodemailer');
+const validator = require('email-validator');
 const client = new Discord.Client();
-
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 2525;
 const { createWriteStream } = require('fs');
 var bar;
 app.use(express.json());
 app.use(express.static('public'));
-
+app.use(express.urlencoded({extended:true}));
 
 app.get('/',(req,res)=>{
     res.sendFile(__dirname+'public/index.html');
@@ -23,6 +23,55 @@ app.get('/privacy-policy',(req,res)=>{
 app.get('/terms-of-service',(req,res)=>{
     res.sendFile(__dirname+'/public/terms-of-service.html');
 });
+app.get('/contact-us',(req,res)=>{
+    res.sendFile(__dirname+'/public/contact-us.html');
+})
+app.post('/sent',async (req,res)=>{
+    const {name,email,message} = req.body;
+    const regex = /\d/; // has number in name
+    const validEmail = validator.validate(email);
+    const invalidName = regex.test(name);
+    if(!validEmail || invalidName){
+        res.status(200).redirect(`/contact-us?success=false&error=InvalidInput`)
+    }
+    else{
+        const Txtmessage = `
+            From ${name}, ${message}, his/her mailing address is ${email}.
+        `;
+        const HTMLmessage =   `
+        <p style='font-weight:bold'>FROM: ${name}</p>
+                <br>
+                <p> ${message} </p>
+                <br>
+            <p>Email: ${email}</p>
+        `;
+        let mailDetails = {
+            from: email,
+            to: "jhicer@gmail.com",
+            sender: email,
+            subject: `Email Notification for Y2BC`,
+            text:  Txtmessage,
+            html: HTMLmessage
+        };
+        try{
+            await nodemailer.mailTransporter.sendMail(mailDetails,(err,data)=>{
+                if (err) {
+                    res.status(500).redirect(`/contact-us?success=false&error=${err}`)
+                    console.log("Error Occurs");
+                    console.log(err)
+                } else {
+                    res.status(200).redirect(`/contact-us?success=true&data=${data}`)
+                    console.log("Email sent successfully");
+                    console.log(data)
+                }
+            });
+        }
+        catch(err){
+            res.status(200).redirect(`/contact-us?success=false&error=InvalidEmailAddress`)
+        }
+    }
+    
+})
 app.get('/videoInfo',async (req,res)=>{
  const videoURL = req.query.videoURL;
  try{
@@ -131,6 +180,9 @@ app.get('/validate/:url_encrypt',(req,res)=>{
 app.get('/error',(req,res)=>{
     res.status(404).sendFile(__dirname+'/public/404.html');
 });
+app.use((req,res,next)=>{
+    res.status(404).sendFile(__dirname+'/public/404.html');
+})
 app.get('/test',(req,res)=>{
     
     let url = 'https://www.youtube.com/watch?v=eo_A7_G1wHI';
