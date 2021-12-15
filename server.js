@@ -112,7 +112,7 @@ app.get('/download/:videoURL/:itag/:title/:extension/:type',(req,res)=>{
     const videoURL = decodeURIComponent(encrypted_URL.replace(/\+/g,  " "));
     const title = decodeURIComponent(encodedTitle.replace(/\+/g,  " "));
     try{
-        res.header('Content-Disposition',`attachment;\ filename="WEBCONVERTER-${title}.${extension}"`);
+        res.header('Content-Disposition',`attachment;\ filename="y2bCONVERTER-${title}.${extension}"`);
         if(type=="video-only"){
             res.status(200);
             ytdl(videoURL)
