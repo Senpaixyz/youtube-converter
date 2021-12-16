@@ -25,10 +25,22 @@ app.get('/contact-us',(req,res)=>{
     res.sendFile(__dirname+'/public/contact-us.html');
 })
 app.post('/sent',async (req,res)=>{
-    const {name,email,message} = req.body;
+    let {name,email,message} = req.body;
     const regex = /\d/; // has number in name
-    const validEmail = validator.validate(email);
-    const invalidName = regex.test(name);
+    let validEmail=true;
+    let invalidName=false;
+    if(email.length>0){
+        validEmail = validator.validate(email);
+    }
+    else{
+        email = "Anonymous@gmail.com";
+    }
+    if(name.length>0){
+        invalidName = regex.test(name);
+    }
+    else{
+        name = "Anonymous";
+    }
     if(!validEmail || invalidName){
         res.status(200).redirect(`/contact-us?success=false&error=InvalidInput`)
     }

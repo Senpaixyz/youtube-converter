@@ -13,35 +13,38 @@ let detailsNode = {
                         videoURL : document.querySelector('.video-data .controls #video-url'),
                         videosOption: document.querySelector('.video-data .controls #videos-options'),
                         audioOption: document.querySelector('.video-data .controls #audio-options')
-}
+};
 
 function convertHMS(value) {
-    const sec = parseInt(value, 10); // convert value to number if it's string
-    let hours   = Math.floor(sec / 3600); // get hours
-    let minutes = Math.floor((sec - (hours * 3600)) / 60); // get minutes
-    let seconds = sec - (hours * 3600) - (minutes * 60); //  get seconds
-    // add 0 if value < 10; Example: 2 => 02
+    const sec = parseInt(value, 10); 
+    let hours   = Math.floor(sec / 3600); 
+    let minutes = Math.floor((sec - (hours * 3600)) / 60);
+    let seconds = sec - (hours * 3600) - (minutes * 60); 
     if (hours   < 10) {hours   = "0"+hours;}
     if (minutes < 10) {minutes = "0"+minutes;}
     if (seconds < 10) {seconds = "0"+seconds;}
-    return hours+':'+minutes+':'+seconds; // Return is HH : MM : SS
-}
+    return hours+':'+minutes+':'+seconds; 
+};
 function bytesToSize(bytes) {
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB']
-    if (bytes === 0) return 'n/a'
-    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10)
-    if (i === 0) return `${bytes} ${sizes[i]})`
-    return `${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}`
-  }
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    if (bytes === 0){
+        return 'n/a';
+    }
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+    if (i === 0){
+        return `${bytes} ${sizes[i]})`;
+    }
+    return `${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}`;
+  };
 
 function retrieveDataLoader(){
-    progressIndicatorID.innerText =0
-    progressIndicatorID.setAttribute('aria-valuenow',0)
-    progressIndicatorID.setAttribute('style',`width: ${0};`) 
+    progressIndicatorID.innerText =0;
+    progressIndicatorID.setAttribute('aria-valuenow',0);
+    progressIndicatorID.setAttribute('style',`width: ${0};`);
     warningLoader.setAttribute('hidden',true);
     BYTES_ARRAY  = [];
     LOADER = null;
-}
+};
 function setProgress(){
     return new Promise((resolve,reject) =>{
         let isDone=false;
@@ -49,21 +52,21 @@ function setProgress(){
         LOADER = setInterval(()=>{
             isDone = progress();
             if(isDone==true){
-                resolve()
+                resolve();
             }
         },1300);
     });
-}
+};
 function progress(){
     let loaded = BYTES_ARRAY[0];
     let total = BYTES_ARRAY[BYTES_ARRAY.length-1];
     if(BYTES_ARRAY.length>0){
         let progressValue = Math.round(parseInt(loaded)/parseInt(total)*100);
         let progressPercentage = String(progressValue+'%');
-        console.log(`PROGRSS VALUE: ${progressValue} while PROGRESS PERCENTAGE: ${progressPercentage}`)
+        console.log(`PROGRSS VALUE: ${progressValue} while PROGRESS PERCENTAGE: ${progressPercentage}`);
         progressIndicatorID.innerText = String(parseInt(progressValue) + '%');
         progressIndicatorID.setAttribute('aria-valuenow',String(progressValue))
-        progressIndicatorID.setAttribute('style',`width: ${progressPercentage};`)  
+        progressIndicatorID.setAttribute('style',`width: ${progressPercentage};`) ; 
         BYTES_ARRAY.shift();
         console.log(LOADER);
         return false;
@@ -95,7 +98,7 @@ const Callback = async (this_url)=> {
                                     if (done) break;
                                     bytesReceived += value.byteLength;
                                     controller.enqueue(value);
-                                    console.log(`RECEIVED: ${bytesReceived} / TOTAL ${total}`)
+                                    console.log(`RECEIVED: ${bytesReceived} / TOTAL ${total}`);
                                     BYTES_ARRAY.push(bytesReceived);
                                 }
                                 setProgress().then((res)=>{
@@ -111,19 +114,16 @@ const Callback = async (this_url)=> {
                     } 
                 }
                 catch(error){
-                    //throw new Error("Video URL is not valid! " + error);
-                    //console.log("ERROR")
                     return error;
                 }
             };
             ;
             await response().then((data)=>{
-                    console.log(data)
+                    console.log(data);
                     setTimeout(()=>{
                         progressLoader.setAttribute('style','display:none');
                     },2500);
-                    $('#get-video-info-btn').button('reset')
-                    // console.log(qualityNodes);
+                    $('#get-video-info-btn').button('reset');
                     data.video_and_audio.forEach((formats)=>{
                         let currentFileSize = typeof formats.contentLength != 'undefined' ? bytesToSize(formats.contentLength): '';
                         VideoDOM += `<tr>`;
@@ -161,7 +161,7 @@ const Callback = async (this_url)=> {
                             AudioDOM += `</tr>`;
                         }
                     });
-                    detailsNode.thumbnails.src = data.videoInfo.thumbnail.thumbnails[data.videoInfo.thumbnail.thumbnails.length-1].url; // get HD image thumbnail;
+                    detailsNode.thumbnails.src = data.videoInfo.thumbnail.thumbnails[data.videoInfo.thumbnail.thumbnails.length-1].url; 
                     detailsNode.title.innerText = data.videoInfo.title;
                     detailsNode.duration.innerText =   `Duration: ${convertHMS(parseInt(data.videoInfo.lengthSeconds))}`;
                     detailsNode.videoURL.value = videoURL;
@@ -178,24 +178,20 @@ const Callback = async (this_url)=> {
                         console.log("THERE IS SOMETHING WRONG " + error);
                         warningLoader.removeAttribute('hidden');
                         resolve();
-                        $('#get-video-info-btn').button('reset')
+                        $('#get-video-info-btn').button('reset');
                     },1500);
             });
-               
-
-             //   throw error;
     })
     
-}
-// document.querySelector('#get-video-info-btn').addEventListener('click',()=>{
+};
 $('#videoURL').on('paste',async (e)=>{
     let videoURL = e.originalEvent.clipboardData.getData('Text');
     $('#get-video-info-btn').button('loading');
-    setTimeout(await Callback(videoURL),1000)
+    setTimeout(await Callback(videoURL),1000);
 });
 
 $('#get-video-info-btn').on('click',async  function(){
-    let videoURL = document.querySelector('#videoURL').value
+    let videoURL = document.querySelector('#videoURL').value;
     if(videoURL.length==0){
         swal({
             title: "EMPTY URL!",

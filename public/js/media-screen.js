@@ -19,18 +19,18 @@ window.addEventListener('resize',()=>{
 function checkResolution() {   
     if($(window).width() < 660){
         inputConvertDOM.innerHTML = `
-                <input type="text" class="form-control col" id="videoURL" placeholder="Paste Youtube URL here..." aria-label="Paste Youtube URL here..." aria-describedby="basic-addon2">
+                <input type="text" class="form-control col" id="videoURL" placeholder="Paste Youtube link here eg. : https://www.youtube.com/watch?v=LoG0E4N4F1Y" aria-label="Paste Youtube link here eg. : https://www.youtube.com/watch?v=LoG0E4N4F1Y" aria-describedby="basic-addon2">
                 <br>
-                <button id="get-video-info-btn" class="col btn btn-primary btn-block" type="button" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Converting.."><i class='fas fa-exchange-alt'></i>  Convert</button>
+                <button id="get-video-info-btn" class="col btn btn-primary btn-block" type="button" data-loading-text="<i class='fa fa-spinner fa-spin '></i> CONVERTING.."> CONVERT</button>
       
         `;
     }
     else{
         inputConvertDOM.innerHTML = `
                                             <div class="input-group mb-3">
-                                            <input type="text" class="form-control" id="videoURL" placeholder="Paste Youtube URL here..." aria-label="Paste Youtube URL here..." aria-describedby="basic-addon2">
+                                            <input type="text" class="form-control" id="videoURL" placeholder="Paste Youtube link here eg. : https://www.youtube.com/watch?v=LoG0E4N4F1Y" aria-label="Paste Youtube link here eg. : https://www.youtube.com/watch?v=LoG0E4N4F1Y" aria-describedby="basic-addon2">
                                             <div class="input-group-append">
-                                                <button id="get-video-info-btn" class="col btn btn-primary btn-block" type="button" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Converting.."><i class='fas fa-exchange-alt'></i>  Convert</button>
+                                                <button id="get-video-info-btn" class="col btn btn-primary btn-block ml-4" type="button" data-loading-text="<i class='fa fa-spinner fa-spin '></i> CONVERTING.."> CONVERT</button>
       
                                             </div>
                                             </div>
