@@ -23,6 +23,9 @@ app.get('/terms-of-service',(req,res)=>{
 });
 app.get('/contact-us',(req,res)=>{
     res.sendFile(__dirname+'/public/contact-us.html');
+});
+app.get('/thankyou',(req,res)=>{
+    res.sendFile(__dirname+'/public/thankyou.html');
 })
 app.post('/sent',async (req,res)=>{
     let {name,email,message} = req.body;

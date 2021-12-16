@@ -84,29 +84,6 @@
      
     </div>
 </header>
-   <!-- <div class="container-fluid container-fluid-max">
-   <div class="header">Youtube Video Downloader App</div>
-    <div class="form">
-        <div class="form-element">
-            <label for="videoURL">Enter Youtube Video URL</label>
-            <input type="text" id="videoURL">
-        </div>
-        <div class="form-element">
-            <button id="get-video-info-btn" class="btn" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Converting..">Generate</button>
-        </div>
-  
-        <div class="form-element">
-            <div class="warning-loader" style="text-align: center;" hidden>
-                Youtube link is not valid click <a onclick="selfReload()">here</a> to reload;
-            </div>
-            <div class="progress" hidden>
-                <div class="progress-bar progress-bar-striped active" role="progressbar" id="progressIndicatorID"
-                aria-valuenow="1" aria-valuemin="1" aria-valuemax="100" style="width:1%">1%
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- </div> -->
     <div class="container video-data"  style="border:1px solid rgba(136, 136, 136, 0.233);padding:12px;">
         <div class="row">
             <div class="col-md-6 data">
@@ -194,6 +171,7 @@
     </div>
     
     <!-- HERO SECTION-->
+    <div class="row">
     <div class="col-md-12">
         <section id="services" class="container">
             <h2 class="display-4 text-center howToHeader">How to download from Youtube.</h2>
@@ -250,11 +228,28 @@
             </div>
          </section>
     </div>
-   
+    <div class="col-md-12 mt-5 mx-auto d-block">
+        <div id="donate-button-container text-center">
+            <div id="donate-button" class="text-center"></div>
+            <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+            <script>
+            PayPal.Donation.Button({
+            env:'production',
+            hosted_button_id:'AKUYJCQE3TWB8',
+            image: {
+            src:'https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif',
+            alt:'Donate with PayPal button',
+            title:'PayPal - The safer, easier way to pay online!',
+            }
+            }).render('#donate-button');
+            </script>
+            </div>
+    </div>
+    </div>
 
 
     <!-- FOOTER SECTION-->
-    <footer class="py-3 bg-light">
+    <footer class="py-3 bg-light mt-5">
         <div class="container">
             <div class="row">
                 <div class="col text-center"><a href="/contact-us">Contact-us</a></div>
